@@ -1,4 +1,11 @@
+<!---
+Copyright (c) 2018 Yann 'Ze' Richard <yann.richard@univ-rennes2.fr>
+SPDX-License-Identifier: LGPL-3.0-or-later
+License-Filename: LICENSE
+-->
 # Standford's like password policy : PHP implementation
+
+[![reuse compliant](https://reuse.software/badge/reuse-compliant.svg)](https://reuse.software/)
 
 This library implements a checker for Standford's password policy in PHP 
 with only one minor change :

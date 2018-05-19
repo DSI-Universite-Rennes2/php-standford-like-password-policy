@@ -1,4 +1,10 @@
 <?php
+/*
+ * Copyright (c) 2018 Yann 'Ze' Richard <yann.richard@univ-rennes2.fr>
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ * License-Filename: LICENSE
+ */
 
 /*
 This file will automatically be included before EACH test if -bf/--bootstrap-file argument is not used.
