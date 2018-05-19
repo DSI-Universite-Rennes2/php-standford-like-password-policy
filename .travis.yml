@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+  - hhvm
+  
+matrix:
+  allow_failures:
+    - php: hhvm
+  
+before_script:
+  - composer self-update || true
+  - composer update
+  - composer --prefer-source --dev install
+
+script: ./vendor/bin/atoum tests/units/StandfordLikePasswordPolicy.php
