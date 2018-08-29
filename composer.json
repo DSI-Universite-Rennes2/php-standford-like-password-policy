@@ -23,5 +23,5 @@
         "psr-4": {
             "UniversiteRennes2\\StandfordLikePasswordPolicy\\": "src/"
         }
-	}
+    }
 }
