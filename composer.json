@@ -4,8 +4,9 @@
     "keywords": ["password", "password policy", "password strength", "security"],
     "type": "library",
     "require": {
-        "ext-mbstring": "^7.0",
-        "ext-intl": "^1.1"
+        "php": "^7.0",
+        "ext-mbstring": "*",
+        "ext-intl": "*"
     },
     "require-dev": {
         "atoum/atoum": "^3.3"
@@ -19,6 +20,16 @@
         }
     ],
     "readme": "README.md",
+    "config": {
+         "preferred-install": {
+             "*": "dist"
+         },
+         "sort-packages": true
+     },
+     "support": {
+         "issues": "",
+         "source": ""
+     },
     "autoload": {
         "psr-4": {
             "UniversiteRennes2\\StandfordLikePasswordPolicy\\": "src/"
