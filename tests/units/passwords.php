@@ -7,11 +7,11 @@
  */
 
 $homerInformation = array(
-	'login'            => 'simpsonh',
+    'login'            => 'simpsonh',
     'surname'          => 'Simpson',
     'givenname'        => 'Homer',
-	'birthdate'        => '1989-12-17',
-	'birthdeptcode'    => '49',
+    'birthdate'        => '1989-12-17',
+    'birthdeptcode'    => '49',
 );
 
 $testResults = array();
@@ -21,9 +21,9 @@ $testResults[] = array(
     'password' => 'le testK1',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => true,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'le testK1',
             // expected results for rules
@@ -35,11 +35,11 @@ $testResults[] = array(
             'symbol'     => 1,
             'passlength' => 9,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -55,9 +55,9 @@ $testResults[] = array(
     'password' => 'Quarante neuf the place to be',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'Quarante neuf the place to be',
             // expected results for rules
@@ -69,11 +69,11 @@ $testResults[] = array(
             'symbol'     => 2,
             'passlength' => 29,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => false,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -89,9 +89,9 @@ $testResults[] = array(
     'password' => 'I prefer seventeen near xmas',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'I prefer seventeen near xmas',
             // expected results for rules
@@ -103,11 +103,11 @@ $testResults[] = array(
             'symbol'     => 2,
             'passlength' => 28,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => false,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -124,9 +124,9 @@ $testResults[] = array(
     'password' => 'Je préfère le dix sept',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'Je préfère le dix sept',
             // expected results for rules
@@ -138,11 +138,11 @@ $testResults[] = array(
             'symbol'     => 2,
             'passlength' => 22,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => false,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -158,9 +158,9 @@ $testResults[] = array(
     'password' => 'Je suis né en Décembre',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'Je suis né en Décembre',
             // expected results for rules
@@ -172,11 +172,11 @@ $testResults[] = array(
             'symbol'     => 2,
             'passlength' => 22,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => false,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -193,9 +193,9 @@ $testResults[] = array(
     'password' => 'h0m3r est vraiment trop fort',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'h0m3r est vraiment trop fort',
             // expected results for rules
@@ -207,14 +207,14 @@ $testResults[] = array(
             'symbol'     => 2,
             'passlength' => 28,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => false,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
-                'givenname'     => array ( 'H0m3r' ),
+                'givenname'     => array( 'H0m3r' ),
                 'birthdate'     => false,
                 'birthdeptcode' => false,
             ),
@@ -227,9 +227,9 @@ $testResults[] = array(
     'password' => 'azertyA1a',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'azertyA1a',
             // expected results for rules
@@ -241,11 +241,11 @@ $testResults[] = array(
             'symbol'     => 0,
             'passlength' => 9,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -261,9 +261,9 @@ $testResults[] = array(
     'password' => 'AZERTYA1,',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'AZERTYA1,',
             // expected results for rules
@@ -275,11 +275,11 @@ $testResults[] = array(
             'symbol'     => 1,
             'passlength' => 9,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -295,9 +295,9 @@ $testResults[] = array(
     'password' => 'azerty11,',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'azerty11,',
             // expected results for rules
@@ -309,11 +309,11 @@ $testResults[] = array(
             'symbol'     => 1,
             'passlength' => 9,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -329,9 +329,9 @@ $testResults[] = array(
     'password' => 'azertyAA,',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'azertyAA,',
             // expected results for rules
@@ -343,11 +343,11 @@ $testResults[] = array(
             'symbol'     => 1,
             'passlength' => 9,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -364,9 +364,9 @@ $testResults[] = array(
     'password' => 'a',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'a',
             // expected results for rules
@@ -378,11 +378,11 @@ $testResults[] = array(
             'symbol'     => 0,
             'passlength' => 1,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -398,9 +398,9 @@ $testResults[] = array(
     'password' => '',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => false,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => '',
             // expected results for rules
@@ -412,11 +412,11 @@ $testResults[] = array(
             'symbol'     => 0,
             'passlength' => 0,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -433,9 +433,9 @@ $testResults[] = array(
     'password' => 'azertyAaazerazee',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => true,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'azertyAaazerazee',
             // expected results for rules
@@ -447,11 +447,11 @@ $testResults[] = array(
             'symbol'     => 2,
             'passlength' => 16,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -468,9 +468,9 @@ $testResults[] = array(
     'password' => 'azertyA1azert',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => true,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'azertyA1azert',
             // expected results for rules
@@ -482,11 +482,11 @@ $testResults[] = array(
             'symbol'     => 2,
             'passlength' => 13,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -498,37 +498,37 @@ $testResults[] = array(
 );
 
 $testResults[] = array(
-    'testname' => '20+ only lowercases', 
+    'testname' => '20+ only lowercases',
     'password' => 'invalid encoding parametter check',
     'personaldata' => $homerInformation,
 
-    'expected' =>	array (
-	    'result' => true,
-        'rules' => array (
+    'expected' => array(
+        'result' => true,
+        'rules' => array(
             // Tested password
             'tested'     => 'invalid encoding parametter check',
             // expected results for rules
-		    'result'     => true,
-		    'length'     => 1,
-		    'upper'      => 2,
-		    'lower'      => 2,
+            'result'     => true,
+            'length'     => 1,
+            'upper'      => 2,
+            'lower'      => 2,
             'digit'      => 2,
-		    'symbol'     => 2,
-		    'passlength' => 33,
-	    ),
-        'data' => array (
+            'symbol'     => 2,
+            'passlength' => 33,
+        ),
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-    		'fields' => array (
-	            'login'         => false,
+            'fields' => array(
+                'login'         => false,
                 'surname'       => false,
-		        'givenname'     => false,
+                'givenname'     => false,
                 'birthdate'      => false,
                 'birthdeptcode' => false,
-		    ),
-	    ),
-	),
+            ),
+        ),
+    ),
 );
 
 
@@ -537,9 +537,9 @@ $testResults[] = array(
     'password' => 'azertyA1,',
     'personaldata' => $homerInformation,
 
-    'expected' =>   array (
+    'expected' =>   array(
         'result' => true,
-        'rules' => array (
+        'rules' => array(
             // Tested password
             'tested'     => 'azertyA1,',
             // expected results for rules
@@ -551,11 +551,11 @@ $testResults[] = array(
             'symbol'     => 1,
             'passlength' => 9,
         ),
-        'data' => array (
+        'data' => array(
             // expected results for personal data rules
             'result' => true,
             // each submitted data results
-            'fields' => array (
+            'fields' => array(
                 'login'         => false,
                 'surname'       => false,
                 'givenname'     => false,
@@ -565,5 +565,3 @@ $testResults[] = array(
         ),
     ),
 );
-
-

@@ -6,50 +6,46 @@
  * License-Filename: LICENSE
  */
 
-// The namespace of the tested class + "test\units"
 namespace UniversiteRennes2\StandfordLikePasswordPolicy\tests\units;
 
-// You must include the tested class (if you don't have an autoloader)
-require_once __DIR__ . '/../../src/StandfordLikePasswordPolicy.php';
+require_once realpath(__DIR__ . '/../../src/StandfordLikePasswordPolicy.php');
 
 use atoum;
 
-class StandfordLikePasswordPolicy extends atoum {
-
-    public function test_construct() {
-        $i = 0;
-        /**/
-
-        $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+class StandfordLikePasswordPolicy extends atoum
+{
+    public function testConstruct()
+    {
+        $this->assert(__METHOD__.' : test default contructor')
             ->given($this->newTestedInstance)
             ->then
                 ->string($this->testedInstance->getEncoding())
                     ->isEqualTo('UTF-8');
 
-        $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__.' : test constructor with valid param')
             ->given($this->newTestedInstance('UTF-16'))
             ->then
                 ->string($this->testedInstance->getEncoding())
-                    ->isEqualTo('UTF-16');
+                ->isEqualTo('UTF-16');
 
-        $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__.' : test constructor with invalid param')
             ->exception(
-				function() {
+                function () {
                     $this->newTestedInstance('AZERTY');
-				}
-        	)
-	        ->error()
-    	    ->withType(E_WARNING)   // pass
-        	->exists()
-		;
-		//$this->exception->hasMessage('ValueError : invalid encoding parametter, check Oniguruma RegEx library encoding list');
+                }
+            )
+            ->error()
+            ->withType(E_WARNING)   // pass
+            ->exists();
+
+        //$this->exception->hasMessage(
+        //  'ValueError : invalid encoding parametter, check Oniguruma RegEx library encoding list'
+        //);
     }
 
-    public function test_setEncoding() {
-		$i =0;
+    public function testSetEncoding()
+    {
+        $i =0;
 
         $i++;
         $this->assert(__METHOD__.' : test #'.$i)
@@ -70,8 +66,8 @@ class StandfordLikePasswordPolicy extends atoum {
         ;
     }
 
-    public function test_isCompliant() {
-
+    public function testIsCompliant()
+    {
         $i =0;
 
         $i++;
@@ -96,7 +92,7 @@ class StandfordLikePasswordPolicy extends atoum {
             ->then
                 // empty passwords
                 ->boolean($this->testedInstance->isCompliant(''))->isFalse()
-                // less than 9 char 
+                // less than 9 char
                 ->boolean($this->testedInstance->isCompliant('a'))->isFalse()
                 // 9 missing digit
                 ->boolean($this->testedInstance->isCompliant('azertyAA,'))->isFalse()
@@ -106,20 +102,28 @@ class StandfordLikePasswordPolicy extends atoum {
                 ->boolean($this->testedInstance->isCompliant('AZERTYA1,'))->isFalse()
                 // 9 missing special
                 ->boolean($this->testedInstance->isCompliant('azertyA1a'))->isFalse()
-		;
+        ;
 
         $i++;
         $this->assert(__METHOD__.' : test #'.$i)
             ->given($this->newTestedInstance)
             ->then
                 // use h4xx0r version of Homer
-                ->boolean($this->testedInstance->isCompliant('h0m3r est vraiment trop fort', array('name' => 'Homer')))->isFalse()
+                ->boolean(
+                    $this->testedInstance->isCompliant('h0m3r est vraiment trop fort', array('name' => 'Homer'))
+                )->isFalse()
                 // use fr_FR month name of a given date
-                ->boolean($this->testedInstance->isCompliant('Je suis né en Décembre', array('birth' => '1989-12-17')))->isFalse()
-                // use fr_FR literal number 
-                ->boolean($this->testedInstance->isCompliant('Je préfère le dix sept', array('birth' => '1989-12-17')))->isFalse()
-                // use en_US literal number 
-                ->boolean($this->testedInstance->isCompliant('I prefer seventeen near xmas', array('birth' => '1989-12-17')))->isFalse()
+                ->boolean(
+                    $this->testedInstance->isCompliant('Je suis né en Décembre', array('birth' => '1989-12-17'))
+                )->isFalse()
+                // use fr_FR literal number
+                ->boolean(
+                    $this->testedInstance->isCompliant('Je préfère le dix sept', array('birth' => '1989-12-17'))
+                )->isFalse()
+                // use en_US literal number
+                ->boolean(
+                    $this->testedInstance->isCompliant('I prefer seventeen near xmas', array('birth' => '1989-12-17'))
+                )->isFalse()
         ;
 
         $i++;
@@ -127,15 +131,21 @@ class StandfordLikePasswordPolicy extends atoum {
             ->given($this->newTestedInstance)
             ->then
                 // working test
-                ->boolean($this->testedInstance->isCompliant('être ou ne pas être telle est la question', array('name' => 'Homer', 'birth' => '1989-12-17')))->isTrue()
+                ->boolean(
+                    $this->testedInstance->isCompliant(
+                        'être ou ne pas être telle est la question',
+                        array('name' => 'Homer', 'birth' => '1989-12-17')
+                    )
+                )->isTrue()
         ;
-    } 
+    }
 
-    public function test_getChecks() {
+    public function testGetChecks()
+    {
         $i = 0;
         require_once(__DIR__ . '/passwords.php');
 
-        foreach ( $testResults as $testResult ) {
+        foreach ($testResults as $testResult) {
             $testName            = $testResult['testname'];
             $testPass            = $testResult['password'];
             $testData            = $testResult['personaldata'];
@@ -148,7 +158,7 @@ class StandfordLikePasswordPolicy extends atoum {
                         ->isEqualTo($testExpectedResult);
         }
     }
-/**/
+    /**/
 
 /**/
 }
