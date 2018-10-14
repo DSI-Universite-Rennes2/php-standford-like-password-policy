@@ -21,15 +21,15 @@
     ],
     "readme": "README.md",
     "config": {
-         "preferred-install": {
-             "*": "dist"
-         },
-         "sort-packages": true
-     },
-     "support": {
-         "issues": "",
-         "source": ""
-     },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "support": {
+        "issues": "",
+        "source": ""
+    },
     "autoload": {
         "psr-4": {
             "UniversiteRennes2\\StandfordLikePasswordPolicy\\": "src/"
