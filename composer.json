@@ -29,8 +29,8 @@
         "sort-packages": true
     },
     "support": {
-        "issues": "",
-        "source": ""
+        "issues": "https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy",
+        "source": "https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy"
     },
     "autoload": {
         "psr-4": {
