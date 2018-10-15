@@ -28,4 +28,4 @@ CVS
 /.project
 /.buildpath
 /.cache
-
+/.php_cs.cache

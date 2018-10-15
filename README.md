@@ -18,7 +18,7 @@ is a length-based password policy : increase password length = decrease constrai
 - 9-11 character passwords require the use of upper and lower case, numerical and special characters.
 - 12-15 character passwords require the use of upper and lower case and numerical characters.
 - 16-19 character passwords require upper and lower case characters
-- 20+ characters require lower case characters.
+- 20+ characters require any characters.
 
 ## Table of Contents
 
@@ -47,10 +47,14 @@ $password = 'not compliant';
 
 if ( $passwordPolicy->isCompliant($password) ) {
     // Compliant password
+    echo "Compliant\n";
 } else {
     // Not compliant !
+    echo "Not compliant\n";
 }
 ```
+
+See a more complete example in `examples/` directory.
 
 ## Contribute
 

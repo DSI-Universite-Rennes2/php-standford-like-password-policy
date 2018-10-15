@@ -26,6 +26,9 @@ use \NumberFormatter;
  */
 class StandfordLikePasswordPolicy
 {
+    const TEST_FAILED  = 0;
+    const TEST_PASSED  = 1;
+    const TEST_USELESS = 2;
 
     /**
      * The character set used in multibytes PHP functions.
@@ -296,14 +299,17 @@ class StandfordLikePasswordPolicy
             //'C' => '(',
             'e' => '3',
             'f' => 'ph',
-            'G' => '6',
-            'g' => '6',
+            //'G' => '6',
+            //'g' => '6',
             'i' => '1',
+            'l' => '1',
             // 'N' => '/\/',
             'o' => '0',
             'O' => '0',
             'S' => '5',
             's' => '5',
+            't' => '7',
+            'T' => '7',
             //'V' => '\/',
             'w' => 'vv',
         );
@@ -402,14 +408,14 @@ class StandfordLikePasswordPolicy
             'result' => false,
 
             // constraints verification
-            //  0     -> needed and failed
-            //  1     -> needed and ok
-            //  2     -> not needed
-            'length' => 0,
-            'upper'  => 0,
-            'lower'  => 0,
-            'digit'  => 0,
-            'symbol' => 0,
+            //  self::TEST_FAILED  (0)     -> needed and failed
+            //  self::TEST_PASSED  (1)     -> needed and ok
+            //  self::TEST_USELESS (2)     -> not needed
+            'length' => self::TEST_FAILED,
+            'upper'  => self::TEST_FAILED,
+            'lower'  => self::TEST_FAILED,
+            'digit'  => self::TEST_FAILED,
+            'symbol' => self::TEST_FAILED,
         );
 
         $password_len      = mb_strlen($password);
@@ -418,19 +424,19 @@ class StandfordLikePasswordPolicy
         if ($password_len > 0) {
             // check symbol
             if (mb_ereg($regSymbol, $password)) {
-                $res['symbol'] = 1;
+                $res['symbol'] = self::TEST_PASSED;
             }
             // check digit
             if (mb_ereg($regDigit, $password)) {
-                $res['digit'] = 1;
+                $res['digit'] = self::TEST_PASSED;
             }
             // check uppercase
             if (mb_ereg($regUpper, $password)) {
-                $res['upper'] = 1;
+                $res['upper'] = self::TEST_PASSED;
             }
             // check lowercase
             if (mb_ereg($regLower, $password)) {
-                $res['lower'] = 1;
+                $res['lower'] = self::TEST_PASSED;
             }
         } else {
             return $res;
@@ -438,21 +444,21 @@ class StandfordLikePasswordPolicy
 
         if ($password_len > 19) {
             // 20+ passwords
-            $res['upper'] = 2;
-            $res['lower'] = 2;
+            $res['upper'] = self::TEST_USELESS;
+            $res['lower'] = self::TEST_USELESS;
         }
         if ($password_len > 15) {
             // 16+
-            $res['digit'] = 2;
+            $res['digit'] = self::TEST_USELESS;
         }
         if ($password_len > 11) {
             // 12+ passwords
-            $res['symbol'] = 2;
+            $res['symbol'] = self::TEST_USELESS;
         }
 
         if ($password_len > 8) {
             // 8+ passwords
-            $res['length'] = 1;
+            $res['length'] = self::TEST_PASSED;
         }
 
         if ($res['length'] && $res['symbol'] && $res['digit'] && $res['upper'] && $res['lower']) {

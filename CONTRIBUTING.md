@@ -11,7 +11,8 @@ We take security seriously. If you discover a security issue, please bring it
 to their attention right away!
 
 Please **DO NOT** file a public issue, instead send your report privately to
-[@univ-rennes2.fr](mailto:slpp@univ-rennes2.fr).
+[foss-security_@t_univ-rennes2.fr](mailto:foss-security_@t_univ-rennes2.fr)
+replace_@t_ by an arobase.
 
 Security reports are greatly appreciated and we will publicly thank you for it.
 
@@ -33,7 +34,7 @@ When reporting issues, always include:
 
 * The version you used or reference to commit id if you used directly git sources,
 * OS version,
-* PHP version, and PHP extensions versions for mbstring and 
+* PHP version, and PHP extensions versions.
 
 Also include the steps required to reproduce the problem if possible and
 applicable. This information will help us review and fix your issue faster.
@@ -49,10 +50,10 @@ This section gives the experienced contributor some tips and guidelines.
 ### Pull requests are always welcome
 
 Not sure if that typo is worth a pull request ? Found a bug and know how to fix
-it ? Do it ! We will appreciate it. 
-Any significant improvement should be documented as 
-[a GitHub issue](https://github.com/moby/moby/issues) before anybody starts 
-working on it.
+it ? Do it ! We will appreciate it.
+Any significant improvement should be documented as
+[a GitHub issue](https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy/issues)
+before anybody starts working on it.
 
 We are always thrilled to receive pull requests. We do our best to process them
 quickly. 
@@ -63,12 +64,17 @@ quickly.
 Fork the repository and make changes on your fork in a feature branch:
 
 - If it's a bug fix branch, name it XXXX-something where XXXX is the number of
-    the issue. 
+  the issue.
 - If it's a feature branch, create an enhancement issue to announce
-    your intentions, and name it XXXX-something where XXXX is the number of the
-    issue.
-
-Submit tests for your changes. See [TESTING.md](./TESTING.md) for details.
+  your intentions, and name it XXXX-something where XXXX is the number of the
+  issue.
+- We use **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)**
+  Check the code style with ``$ composer check-style`` and fix it with ``$ composer fix-style``.
+- **Add tests !** - Your patch won't be accepted if it doesn't have tests.
+- Run tests via ``$ composer test``
+- **Document any change in behaviour** - Make sure the `README.md` and any other
+  relevant documentation are kept up-to-date.
+- **Send coherent history** - Make sure each individual commit in your pull request is meaningful. If you had to make multiple intermediate commits while developing, please [squash them](http://www.git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Changing-Multiple-Commit-Messages) before submitting.
 
 Write clean code. Universally formatted code promotes ease of writing, reading,
 and maintenance.
