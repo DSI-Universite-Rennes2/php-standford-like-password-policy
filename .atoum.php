@@ -1,12 +1,5 @@
 <?php
 /*
- * Copyright (c) 2018 Yann 'Ze' Richard <yann.richard@univ-rennes2.fr>
- *
- * SPDX-License-Identifier: LGPL-3.0-or-later
- * License-Filename: LICENSE
- */
-
-/*
 This file will automatically be included before EACH run.
 
 Use it to configure atoum or anything that needs to be done before EACH run.
@@ -16,47 +9,40 @@ More information on documentation:
 [fr] http://docs.atoum.org/fr/chapter3.html#Fichier-de-configuration
 */
 
-$report = $script->addDefaultReport();
+use mageekguy\atoum\reports;
 
-/*
-LOGO
-*/
-// This will add the atoum logo before each run.
-// $report->addField(new atoum\report\fields\runner\atoum\logo());
+$runner
+    ->addTestsFromDirectory(__DIR__ . '/tests/units/')
+    ->disallowUsageOfUndefinedMethodInMock();
 
-// This will add a green or red logo after each run depending on its status.
-// $report->addField(new atoum\report\fields\runner\result\logo());
+$runner->getScore()->getCoverage();
 
-/*
-CODE COVERAGE SETUP
-*/
-// Please replace in next line "Project Name" by your project name and "/path/to/destination/directory" by your destination directory path for html files.
-$coverage_field = new atoum\report\fields\runner\coverage\html('php-standford-like-password-policy', __DIR__.'/reports/atoum');
-
-// Please replace in next line http://url/of/web/site by the root url of your code coverage web site.
-// $coverage_field->setRootUrl('http://url/of/web/site');
-
-$report->addField($coverage_field);
-
-/*
-TEST GENERATOR SETUP
-*/
-$test_generator = new atoum\test\generator();
-
-// Please replace in next line "/path/to/your/tests/units/classes/directory" by your unit test's directory.
-$test_generator->setTestClassesDirectory(__DIR__.'/tests/units/');
-
-// Please replace in next line "your\project\namespace\tests\units" by your unit test's namespace.
-$test_generator->setTestClassNamespace('UniversiteRennes2\StandfordLikePasswordPolicy\tests\units');
-
-// Please replace in next line "/path/to/your/classes/directory" by your classes directory.
-$test_generator->setTestedClassesDirectory(__DIR__.'/src/StandfordLikePasswordPolicy.php');
-
-// Please replace in next line "your\project\namespace" by your project namespace.
-$test_generator->setTestedClassNamespace('UniversiteRennes2\StandfordLikePasswordPolicy');
-
-// Please replace in next line "path/to/your/tests/units/runner.php" by path to your unit test's runner.
-// $test_generator->setRunnerPath('path/to/your/tests/units/runner.php');
-
-$script->getRunner()->setTestGenerator($test_generator);
-
+$travis = getenv('TRAVIS');
+if ($travis)
+{
+    echo "TRAVIS ENV\n";
+    echo "  JOB ID : " . getenv('TRAVIS_JOB_ID') . "\n";
+    echo "  BRANCH : " . getenv('TRAVIS_BRANCH') . "\n";
+    $script->addDefaultReport();
+    $coverallsToken = getenv('COVERALLS_REPO_TOKEN');
+    if ($coverallsToken)
+    {
+        echo "  COVERALLS Token detected...\n";
+        $coverallsReport = new reports\asynchronous\coveralls('classes', $coverallsToken);
+        $defaultFinder = $coverallsReport->getBranchFinder();
+        $coverallsReport
+            ->setBranchFinder(function() use ($defaultFinder) {
+                    if (($branch = getenv('TRAVIS_BRANCH')) === false)
+                    {
+                        $branch = $defaultFinder();
+                    }
+                    return $branch;
+                }
+            )
+            ->setServiceName(getenv('TRAVIS') ? 'travis-ci' : null)
+            ->setServiceJobId(getenv('TRAVIS_JOB_ID') ?: null)
+            ->addDefaultWriter()
+        ;
+        $runner->addReport($coverallsReport);
+    }
+}

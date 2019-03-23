@@ -1,22 +1,21 @@
-# Copyright (c) 2018 Yann 'Ze' Richard <yann.richard@univ-rennes2.fr>
-# SPDX-License-Identifier: LGPL-3.0-or-later
-# License-Filename: LICENSE
-
 language: php
 
 php:
-  - 7.0
   - 7.1
   - 7.2
-  - hhvm
-  
+  - 7.3
+  - nightly
+
 matrix:
   allow_failures:
-    - php: hhvm
-  
+    - php: nightly
+
 before_script:
   - composer self-update || true
   - composer update
   - composer --prefer-source --dev install
 
-script: ./vendor/bin/atoum tests/units/StandfordLikePasswordPolicy.php
+script:
+  - ./vendor/bin/phpcs -p --standard=./phpcs.xml --extensions=php --warning-severity=0 src/ tests/ examples/
+  - php -ddate.timezone=Europe/Paris ./vendor/bin/atoum +verbose
+
