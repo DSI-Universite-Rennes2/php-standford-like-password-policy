@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * Copyright (c) 2018 Yann 'Ze' Richard <yann.richard@univ-rennes2.fr>
  *
