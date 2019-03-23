@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * Copyright (c) 2018-2019 Yann 'Ze' Richard <yann.richard@univ-rennes2.fr>
  *
@@ -9,26 +12,22 @@
 /**
  * StandfordLikePasswordPolicy - Standford's like Password policy implementation
  *
- * @see       https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy
- *
- * @author    Yann 'Ze' Richard <yann.richard@univ-rennes2.fr>
- * @copyright Université Rennes 2 - https://www.univ-rennes2.fr/
- * @license   http://www.gnu.org/licenses/lgpl.txt LGPL-3.0-or-later
+ * @see https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy
  */
+
 namespace UniversiteRennes2\StandfordLikePasswordPolicy;
 
-use \Datetime;
-use \NumberFormatter;
+use Datetime;
+use NumberFormatter;
 
 /**
  * StandfordLikePasswordPolicy - Standford's like Password policy implementation
- *
  */
 class StandfordLikePasswordPolicy
 {
-    const TEST_FAILED  = 0;
-    const TEST_PASSED  = 1;
-    const TEST_USELESS = 2;
+    public const TEST_FAILED  = 0;
+    public const TEST_PASSED  = 1;
+    public const TEST_USELESS = 2;
 
     /**
      * The character set used in multibytes PHP functions.
@@ -38,8 +37,6 @@ class StandfordLikePasswordPolicy
     protected $encoding = '';
 
     /**
-     * Constructor.
-     *
      * @param string $encoding character set used in multibytes PHP functions. Default: UTF-8
      */
     public function __construct(string $encoding = 'UTF-8')
@@ -55,7 +52,7 @@ class StandfordLikePasswordPolicy
      *
      * @return string current used charset
      */
-    public function getEncoding()
+    public function getEncoding() : string
     {
         return $this->encoding;
     }
@@ -67,7 +64,7 @@ class StandfordLikePasswordPolicy
      *
      * @return bool true on success, false if it's not a known charset
      */
-    public function setEncoding(string $encoding)
+    public function setEncoding(string $encoding) : bool
     {
         if (strcmp($this->encoding, $encoding) === 0) {
             return true;
@@ -77,28 +74,30 @@ class StandfordLikePasswordPolicy
         if ($res1 && $res2) {
             $this->encoding = $encoding;
             return true;
-        } elseif ($this->encoding != '') {
+        }
+
+        if ($this->encoding !== '') {
             // failback
             mb_internal_encoding($this->encoding);
             @mb_regex_encoding($this->encoding);
             return false;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
      * Check if a password is compliant with the password policy
      *
-     * @param string $password Password to test
+     * @param string                                                            $password Password to test
      * @param array personal data about the user such as surname, givenname etc.
      *              see StandfordLikePasswordPolicy::checkPasswordContent
      *
      * @return bool true on success, false if address already used or invalid in some way
      */
-    public function isCompliant(string $password, array $userInformation = array())
+    public function isCompliant(string $password, array $userInformation = array()) : bool
     {
-        $res  = $this->getChecks($password, $userInformation);
+        $res = $this->getChecks($password, $userInformation);
         return $res['result'];
     }
 
@@ -107,8 +106,7 @@ class StandfordLikePasswordPolicy
      *
      * @param string $password
      *   Password to check
-     *
-     * @param array $userInformation
+     * @param array  $userInformation
      *   Personnal user information with a key foreach submitted data.
      *   exemple of keys :
      *     login
@@ -132,7 +130,7 @@ class StandfordLikePasswordPolicy
      *                                 we considers matching with password
      *                                 content.
      */
-    private function checkPasswordContent(string $password, array $userInformation)
+    private function checkPasswordContent(string $password, array $userInformation) : array
     {
         $firstname = '';
         $lastname  = '';
@@ -143,13 +141,13 @@ class StandfordLikePasswordPolicy
 
         foreach ($userInformation as $infoName => $info) {
             $format = 'Y-m-d';
-            $date = DateTime::createFromFormat($format, $info);
+            $date   = DateTime::createFromFormat($format, $info);
             if ($date === false) {
                 // not a date
                 $res = $this->contains($password, $info);
-                if ($res['result'] == true) {
+                if ($res['result'] === true) {
                     $finalResult[$infoName] = $res['founds'];
-                    $finalTestResult = false;
+                    $finalTestResult        = false;
                 } else {
                     $finalResult[$infoName] = false;
                 }
@@ -171,15 +169,17 @@ class StandfordLikePasswordPolicy
                 // Now we need to search for all of theirs
                 foreach ($tests as $val) {
                     $res = $this->contains($password, $val);
-                    if ($res['result'] == true) {
-                        $tmp = array_merge($founds, $res['founds']);
-                        $finalTestResult = false;
-                        $founds = $tmp;
+                    if ($res['result'] !== true) {
+                        continue;
                     }
+
+                    $tmp             = array_merge($founds, $res['founds']);
+                    $finalTestResult = false;
+                    $founds          = $tmp;
                 }
                 if (! empty($founds)) {
                     $finalResult[$infoName] = $founds;
-                    $finalTestResult = false;
+                    $finalTestResult        = false;
                 } else {
                     $finalResult[$infoName] = false;
                 }
@@ -192,34 +192,34 @@ class StandfordLikePasswordPolicy
         return $res;
     }
 
-    /** Search the given value or similar into string :
+    /**
+     * Search the given value or similar into string :
      *
      *     - Search literal version of numeric value in 5 langs and their H@x0r transformation version
      *     - Search for H@x0r transformation version for non-numeric value
      *
      * @param $subject subject where searching
-     *
      * @param $value value to search
      *
      * @return array Results of tests with keys :
      *     result   TRUE|FALSE  Global result
      *     founds   array       Contains all values ($value or transformations) founds
      */
-    private function contains(string $subject, $value)
+    private function contains(string $subject, $value) : array
     {
-        $tests = array();
+        $tests         = array();
         $res['result'] = false;
 
         $tests[] = $value;
         if (is_numeric($value)) {
-            $locales = array( 'fr_FR', 'en_US', 'de_DE', 'it', 'es_ES' );
+            $locales   = array( 'fr_FR', 'en_US', 'de_DE', 'it', 'es_ES' );
             $oldlocale = setlocale(LC_TIME, 0);
             foreach ($locales as $lang) {
                 $number = (int) $value;
                 if ($number <= 12) {
-                    $resloc = setlocale(LC_TIME, $lang.'.UTF-8');
+                    $resloc = setlocale(LC_TIME, $lang . '.UTF-8');
                     if ($resloc !== false) {
-                        $date    = DateTime::createFromFormat('!m', $number);
+                        $date    = DateTime::createFromFormat('!m', "$number");
                         $tests[] = strftime('%B', $date->getTimestamp()); // Complete name
                         $tests[] = strftime('%b', $date->getTimestamp()); // Abbreviated name
                     }
@@ -249,7 +249,7 @@ class StandfordLikePasswordPolicy
         unset($tmp);
 
         // make tests unique
-        $t = array_unique($tests);
+        $t     = array_unique($tests);
         $tests = $t;
         unset($t);
 
@@ -257,17 +257,20 @@ class StandfordLikePasswordPolicy
         $founds = array();
         // Now we need to search for all of theirs
         foreach ($tests as $val) {
-            if (mb_stripos($subject, $val) !== false) {
-                $founds[]      = $val;
-                $res['result'] = true;
+            if (mb_stripos($subject, $val) === false) {
+                continue;
             }
+
+            $founds[]      = $val;
+            $res['result'] = true;
         }
         $res['founds'] = $founds;
 
         return $res;
     }
 
-    /** Change the case of a chararacter
+    /**
+     * Change the case of a chararacter
      *
      * @param $c Character to change case
      *
@@ -281,15 +284,16 @@ class StandfordLikePasswordPolicy
             return mb_strtoupper($c);
         }
     }
-    */
+     */
 
-    /** Transforms a text into h4xx0r-5tyl3 (simple way)
+    /**
+     * Transforms a text into h4xx0r-5tyl3 (simple way)
      *
      * @param $s String to transform
      *
      * @return Tranformed string
      */
-    private function mbH4xx0r(string $s)
+    private function mbH4xx0r(string $s) : string
     {
         $replacements = array(
             'A' => '4',
@@ -321,12 +325,12 @@ class StandfordLikePasswordPolicy
     /**
      * Check password against policy and return each rules compliantcy
      *
+     * @see StandfordLikePasswordPolicy::checkPasswordContent()
+     *
      * @param string $password
      *   Password to check
-     *
-     * @param array $userInformation
+     * @param array  $userInformation
      *   array of user's informations you don't want to be used in password. all information MUST have a key
-     *   @see StandfordLikePasswordPolicy::checkPasswordContent()
      *
      * @return array
      *   Check results array details with keys :
@@ -355,19 +359,18 @@ class StandfordLikePasswordPolicy
      *                                 content.
      *      )
      */
-    public function getChecks(string $password, array $userInformation)
+    public function getChecks(string $password, array $userInformation) : array
     {
-        $resPwdCheck  = $this->checkStandfordPolicy($password);
-        $resContent   = $this->checkPasswordContent($password, $userInformation);
+        $resPwdCheck = $this->checkStandfordPolicy($password);
+        $resContent  = $this->checkPasswordContent($password, $userInformation);
 
         $globalResult = $resPwdCheck['result'] && $resContent['result'];
 
-        $res = array(
+        return array(
             'result' => $globalResult,
             'rules'  => $resPwdCheck,
             'data'   => $resContent,
         );
-        return $res;
     }
 
     /**
@@ -377,9 +380,8 @@ class StandfordLikePasswordPolicy
      *
      * @return array of detailled results (@see StandfordLikePasswordPolicy::getChecks())
      */
-    private function checkStandfordPolicy(string $password)
+    private function checkStandfordPolicy(string $password) : array
     {
-
         // Manual regexp
         // $regSymbol = '[\x{0020}-\x{002F}\x{003A}-\x{0040}\x{005B}-\x{0060}\x{007B}-\x{007E}\x{00A0}-\x{00BF}]';
         // $regDigit  = '[0-9]';
@@ -397,7 +399,6 @@ class StandfordLikePasswordPolicy
         //          => https://github.com/geoffgarside/oniguruma/blob/master/Syntax.txt
         //
         //             Alnum, Digit, Upper, Lower works with all encodings.
-        //
         $regSymbol = '[\p{^Alnum}]'; // Not alphanumeric = symbols
         $regDigit  = '[\p{Digit}]';
         $regUpper  = '[\p{Upper}]';
@@ -421,25 +422,25 @@ class StandfordLikePasswordPolicy
         $password_len      = mb_strlen($password);
         $res['passlength'] = $password_len;
 
-        if ($password_len > 0) {
-            // check symbol
-            if (mb_ereg($regSymbol, $password)) {
-                $res['symbol'] = self::TEST_PASSED;
-            }
-            // check digit
-            if (mb_ereg($regDigit, $password)) {
-                $res['digit'] = self::TEST_PASSED;
-            }
-            // check uppercase
-            if (mb_ereg($regUpper, $password)) {
-                $res['upper'] = self::TEST_PASSED;
-            }
-            // check lowercase
-            if (mb_ereg($regLower, $password)) {
-                $res['lower'] = self::TEST_PASSED;
-            }
-        } else {
+        if ($password_len <= 0) {
             return $res;
+        }
+
+        // check symbol
+        if (mb_ereg($regSymbol, $password)) {
+            $res['symbol'] = self::TEST_PASSED;
+        }
+        // check digit
+        if (mb_ereg($regDigit, $password)) {
+            $res['digit'] = self::TEST_PASSED;
+        }
+        // check uppercase
+        if (mb_ereg($regUpper, $password)) {
+            $res['upper'] = self::TEST_PASSED;
+        }
+        // check lowercase
+        if (mb_ereg($regLower, $password)) {
+            $res['lower'] = self::TEST_PASSED;
         }
 
         if ($password_len > 19) {
