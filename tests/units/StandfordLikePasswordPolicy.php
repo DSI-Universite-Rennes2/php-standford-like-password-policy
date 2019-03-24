@@ -6,6 +6,8 @@
  * License-Filename: LICENSE
  */
 
+declare(strict_types=1);
+
 namespace UniversiteRennes2\StandfordLikePasswordPolicy\tests\units;
 
 require_once realpath(__DIR__ . '/../../src/StandfordLikePasswordPolicy.php');
@@ -14,23 +16,23 @@ use atoum;
 
 class StandfordLikePasswordPolicy extends atoum
 {
-    public function testConstruct()
+    public function testConstruct() : void
     {
-        $this->assert(__METHOD__.' : test default contructor')
+        $this->assert(__METHOD__ . ' : test default contructor')
             ->given($this->newTestedInstance)
             ->then
                 ->string($this->testedInstance->getEncoding())
                     ->isEqualTo('UTF-8');
 
-        $this->assert(__METHOD__.' : test constructor with valid param')
+        $this->assert(__METHOD__ . ' : test constructor with valid param')
             ->given($this->newTestedInstance('UTF-16'))
             ->then
                 ->string($this->testedInstance->getEncoding())
                 ->isEqualTo('UTF-16');
 
-        $this->assert(__METHOD__.' : test constructor with invalid param')
+        $this->assert(__METHOD__ . ' : test constructor with invalid param')
             ->exception(
-                function () {
+                function () : void {
                     $this->newTestedInstance('AZERTY');
                 }
             )
@@ -43,19 +45,19 @@ class StandfordLikePasswordPolicy extends atoum
         //);
     }
 
-    public function testSetEncoding()
+    public function testSetEncoding() : void
     {
         $i =0;
 
         $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__ . ' : test #' . $i)
             ->given($this->newTestedInstance('UTF-16'))
             ->then
                 ->boolean($this->testedInstance->setEncoding('UTF-16'))->isTrue();
 
 
         $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__ . ' : test #' . $i)
             ->given($this->newTestedInstance)
             ->then
                 ->boolean($this->testedInstance->setEncoding('AZERTY'))
@@ -66,12 +68,12 @@ class StandfordLikePasswordPolicy extends atoum
         ;
     }
 
-    public function testIsCompliant()
+    public function testIsCompliant() : void
     {
         $i =0;
 
         $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__ . ' : test #' . $i)
             ->given($this->newTestedInstance)
             ->then
                 // 20+ only lowercase
@@ -87,7 +89,7 @@ class StandfordLikePasswordPolicy extends atoum
             ;
 
         $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__ . ' : test #' . $i)
             ->given($this->newTestedInstance)
             ->then
                 // empty passwords
@@ -105,7 +107,7 @@ class StandfordLikePasswordPolicy extends atoum
         ;
 
         $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__ . ' : test #' . $i)
             ->given($this->newTestedInstance)
             ->then
                 // use h4xx0r version of Homer
@@ -127,7 +129,7 @@ class StandfordLikePasswordPolicy extends atoum
         ;
 
         $i++;
-        $this->assert(__METHOD__.' : test #'.$i)
+        $this->assert(__METHOD__ . ' : test #' . $i)
             ->given($this->newTestedInstance)
             ->then
                 // working test
@@ -140,10 +142,10 @@ class StandfordLikePasswordPolicy extends atoum
         ;
     }
 
-    public function testGetChecks()
+    public function testGetChecks() : void
     {
         $i = 0;
-        require_once(__DIR__ . '/passwords.php');
+        require_once __DIR__ . '/passwords.php';
 
         foreach ($testResults as $testResult) {
             $testName            = $testResult['testname'];
@@ -151,14 +153,11 @@ class StandfordLikePasswordPolicy extends atoum
             $testData            = $testResult['personaldata'];
             $testExpectedResult  = $testResult['expected'];
 
-            $this->assert(__METHOD__. "$testName")
+            $this->assert(__METHOD__ . ' ' . $testName)
                 ->given($this->newTestedInstance)
                 ->then
                     ->array($this->testedInstance->getChecks($testPass, $testData))
                         ->isEqualTo($testExpectedResult);
         }
     }
-    /**/
-
-/**/
 }
