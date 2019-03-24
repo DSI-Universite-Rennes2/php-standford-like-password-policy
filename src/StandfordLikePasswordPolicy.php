@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace UniversiteRennes2\StandfordLikePasswordPolicy;
 
-use Datetime;
+use DateTime;
 use NumberFormatter;
 
 /**
@@ -37,6 +37,8 @@ class StandfordLikePasswordPolicy
     protected $encoding = '';
 
     /**
+     * StandfordLikePasswordPolicy constructor
+     *
      * @param string $encoding character set used in multibytes PHP functions. Default: UTF-8
      */
     public function __construct(string $encoding = 'UTF-8')
@@ -89,9 +91,10 @@ class StandfordLikePasswordPolicy
     /**
      * Check if a password is compliant with the password policy
      *
-     * @param string                                                            $password Password to test
-     * @param array personal data about the user such as surname, givenname etc.
-     *              see StandfordLikePasswordPolicy::checkPasswordContent
+     * @see StandfordLikePasswordPolicy::checkPasswordContent
+     *
+     * @param string   $password        Password to test
+     * @param string[] $userInformation personal data about the user such as surname, givenname etc.
      *
      * @return bool true on success, false if address already used or invalid in some way
      */
@@ -104,9 +107,9 @@ class StandfordLikePasswordPolicy
     /**
      * Check password content compared to personal data
      *
-     * @param string $password
+     * @param string   $password
      *   Password to check
-     * @param array  $userInformation
+     * @param string[] $userInformation
      *   Personnal user information with a key foreach submitted data.
      *   exemple of keys :
      *     login
@@ -116,7 +119,7 @@ class StandfordLikePasswordPolicy
      *
      *     Sumbmitted date MUST have been formated : YYYY-MM-DD
      *
-     * @return array
+     * @return mixed[]
      *   Check results array details with keys :
      *
      *     result    TRUE|FALSE    Global test result: TRUE all OK. FALSE = Something wrong,
@@ -185,11 +188,10 @@ class StandfordLikePasswordPolicy
                 }
             }
         }
-        $res = array(
+        return array(
             'result' => $finalTestResult,
             'fields' => $finalResult,
         );
-        return $res;
     }
 
     /**
@@ -198,10 +200,10 @@ class StandfordLikePasswordPolicy
      *     - Search literal version of numeric value in 5 langs and their H@x0r transformation version
      *     - Search for H@x0r transformation version for non-numeric value
      *
-     * @param $subject subject where searching
-     * @param $value value to search
+     * @param string $subject subject where searching
+     * @param mixed  $value   value to search
      *
-     * @return array Results of tests with keys :
+     * @return mixed[] Results of tests with keys :
      *     result   TRUE|FALSE  Global result
      *     founds   array       Contains all values ($value or transformations) founds
      */
@@ -219,7 +221,7 @@ class StandfordLikePasswordPolicy
                 if ($number <= 12) {
                     $resloc = setlocale(LC_TIME, $lang . '.UTF-8');
                     if ($resloc !== false) {
-                        $date    = DateTime::createFromFormat('!m', "$number");
+                        $date    = DateTime::createFromFormat('!m', $value);
                         $tests[] = strftime('%B', $date->getTimestamp()); // Complete name
                         $tests[] = strftime('%b', $date->getTimestamp()); // Abbreviated name
                     }
@@ -289,7 +291,7 @@ class StandfordLikePasswordPolicy
     /**
      * Transforms a text into h4xx0r-5tyl3 (simple way)
      *
-     * @param $s String to transform
+     * @param string $s String to transform
      *
      * @return Tranformed string
      */
@@ -327,12 +329,12 @@ class StandfordLikePasswordPolicy
      *
      * @see StandfordLikePasswordPolicy::checkPasswordContent()
      *
-     * @param string $password
+     * @param string   $password
      *   Password to check
-     * @param array  $userInformation
+     * @param string[] $userInformation
      *   array of user's informations you don't want to be used in password. all information MUST have a key
      *
-     * @return array
+     * @return mixed[]
      *   Check results array details with keys :
      *
      *     result    TRUE|FALSE    Global test result
@@ -364,10 +366,8 @@ class StandfordLikePasswordPolicy
         $resPwdCheck = $this->checkStandfordPolicy($password);
         $resContent  = $this->checkPasswordContent($password, $userInformation);
 
-        $globalResult = $resPwdCheck['result'] && $resContent['result'];
-
         return array(
-            'result' => $globalResult,
+            'result' => $resPwdCheck['result'] && $resContent['result'],
             'rules'  => $resPwdCheck,
             'data'   => $resContent,
         );
@@ -378,7 +378,7 @@ class StandfordLikePasswordPolicy
      *
      * @param string $password Password to check
      *
-     * @return array of detailled results (@see StandfordLikePasswordPolicy::getChecks())
+     * @return mixed[] of detailled results (@see StandfordLikePasswordPolicy::getChecks())
      */
     private function checkStandfordPolicy(string $password) : array
     {
