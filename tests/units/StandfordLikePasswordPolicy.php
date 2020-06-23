@@ -80,6 +80,9 @@ class StandfordLikePasswordPolicy extends atoum
                 ->boolean($this->testedInstance->isCompliant('invalid encoding parametter check'))->isTrue()
                 // 9 with all needed mixed char
                 ->boolean($this->testedInstance->isCompliant('azertyA1,'))->isTrue()
+                // Testing with accented characters as only UPPER/lower (testing char conversion)
+                ->boolean($this->testedInstance->isCompliant('azertyÉ1,'))->isTrue()
+                ->boolean($this->testedInstance->isCompliant('AZERTYö1,'))->isTrue()
                 // 13 with lower/upper/digit
                 ->boolean($this->testedInstance->isCompliant('azertyA1azer'))->isTrue()
                 // 16 with lower/upper
