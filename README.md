@@ -7,12 +7,12 @@ License-Filename: LICENSE
 
 [![reuse compliant](https://reuse.software/badge/reuse-compliant.svg)](https://reuse.software/)
 
-This library implements a checker for Standford's password policy in PHP 
+This library implements a checker for Standford's password policy in PHP
 with only one minor change :
 
 - The minimal password's length is 9 (instead of 8 in the original policy)
 
-The [Standford password policy](https://uit.stanford.edu/service/accounts/passwords) 
+The [Standford password policy](https://uit.stanford.edu/service/accounts/passwords)
 is a length-based password policy : increase password length = decrease constraints.
 
 - 9-11 character passwords require the use of upper and lower case, numerical and special characters.
@@ -22,10 +22,12 @@ is a length-based password policy : increase password length = decrease constrai
 
 ## Table of Contents
 
-- [Install](#install)
-- [Usage](#usage)
-- [Contribute](#contribute)
-- [License](#license)
+- [Standford's like password policy : PHP implementation](#standfords-like-password-policy--php-implementation)
+  - [Table of Contents](#table-of-contents)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## Install
 
