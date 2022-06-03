@@ -177,9 +177,6 @@
         </properties>
     </rule>
 
-    <!-- Forbid dead code -->
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
-
     <!-- Forbid suffix "Abstract" for abstract classes -->
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
 
@@ -197,6 +194,8 @@
             <property name="linesCountBetweenDescriptionAndAnnotations" value="1"/>
             <property name="linesCountBetweenAnnotationsGroups" value="1"/>
             <property name="annotationsGroups" type="array">
+                <element value="@param"/>
+                <element value="@return"/>
                 <element value="
                     @internal,
                     @deprecated,
@@ -210,8 +209,6 @@
                     @ORM\,
                     @ODM\,
                 "/>
-                <element value="@param"/>
-                <element value="@return"/>
                 <element value="@throws"/>
             </property>
         </properties>
@@ -413,7 +410,7 @@
     <!-- Require types to be written as natively if possible;
          require iterable types to specify phpDoc with their content;
          forbid useless/duplicated information in phpDoc -->
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
         <properties>
             <property name="allAnnotationsAreUseful" value="true"/>
             <property name="enableEachParameterAndReturnInspection" value="true"/>
@@ -583,7 +580,7 @@
 
     <!-- Include some specific sniffs -->
     <rule ref="Generic.Commenting.Todo"/>
-    <!-- <rule ref="Generic.Commenting.DocComment"/> -->
+    <rule ref="Generic.Commenting.DocComment"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>

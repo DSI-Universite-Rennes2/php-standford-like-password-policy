@@ -91,12 +91,12 @@ class StandfordLikePasswordPolicy
     /**
      * Check if a password is compliant with the password policy
      *
-     * @see StandfordLikePasswordPolicy::checkPasswordContent
-     *
-     * @param string   $password        Password to test
+     * @param string   $password        Password to tes
      * @param string[] $userInformation personal data about the user such as surname, givenname etc.
      *
      * @return bool true on success, false if address already used or invalid in some way
+     *
+     * @see StandfordLikePasswordPolicy::checkPasswordContent
      */
     public function isCompliant(string $password, array $userInformation = array()) : bool
     {
@@ -327,8 +327,6 @@ class StandfordLikePasswordPolicy
     /**
      * Check password against policy and return each rules compliantcy
      *
-     * @see StandfordLikePasswordPolicy::checkPasswordContent()
-     *
      * @param string   $password
      *   Password to check
      * @param string[] $userInformation
@@ -360,6 +358,8 @@ class StandfordLikePasswordPolicy
      *                                 we considers matching with password
      *                                 content.
      *      )
+     *
+     * @see StandfordLikePasswordPolicy::checkPasswordContent()
      */
     public function getChecks(string $password, array $userInformation) : array
     {
