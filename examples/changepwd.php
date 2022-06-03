@@ -14,7 +14,7 @@ require_once __DIR__ . '/../tests/units/passwords.php';
 // Just for echo in colors :)
 require_once __DIR__ . '/console.php';
 
-function echoResult($result)
+function echoResult(int $result)
 {
     $str = '';
     if ($result === 1) {
@@ -35,7 +35,7 @@ foreach ($testResults as $testResult) {
 
     $result = $passwordPolicy->getChecks($testPass, $testData);
 
-    echo "Test results for '$testPass' : " . echoResult($result['result']) . "\n";
+    echo "Test results for '" . $testPass . "' : " . echoResult($result['result']) . "\n";
     echo "\n";
     echo '    Password Rules : ' . echoResult($result['rules']['result']) . "\n";
     echo '        Length : ' . echoResult($result['rules']['length']) . ' (' . $result['rules']['passlength'] . ")\n";
@@ -52,7 +52,7 @@ foreach ($testResults as $testResult) {
             }
 
             $founds = implode(',', $what);
-            echo "        -> $fieldname (" . Console::red($founds) . ") as been found in given password !\n";
+            echo '        -> ' . $fieldname . ' (' . Console::red($founds) . ') as been found in given password !' . "\n";
         }
     }
     echo "\n";
