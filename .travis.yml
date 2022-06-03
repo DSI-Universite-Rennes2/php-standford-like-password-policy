@@ -16,6 +16,6 @@ before_script:
   - composer --prefer-source --dev install
 
 script:
-  - ./vendor/bin/phpcs -p --standard=./phpcs.xml --extensions=php --warning-severity=0 src/ tests/ examples/
+  - ./vendor/bin/phpcs -p --standard=./phpcs.xml --extensions=php --warning-severity=0 --ignore=examples/console.php src/ tests/ examples/
   - php -ddate.timezone=Europe/Paris ./vendor/bin/atoum +verbose
 
