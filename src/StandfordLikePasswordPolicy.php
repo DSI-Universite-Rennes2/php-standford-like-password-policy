@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace UniversiteRennes2\StandfordLikePasswordPolicy;
 
 use DateTime;
+use Error;
 use NumberFormatter;
 use function PHP81_BC\strftime;
 
@@ -72,20 +73,23 @@ class StandfordLikePasswordPolicy
         if (strcmp($this->encoding, $encoding) === 0) {
             return true;
         }
-        $res1 = mb_internal_encoding($encoding);
-        $res2 = @mb_regex_encoding($encoding);
+        try {
+            $res1 = mb_internal_encoding($encoding);
+            $res2 = @mb_regex_encoding($encoding);
+        } catch (Error $e) {
+            $res1 = false;
+            $res2 = false;
+        }
         if ($res1 && $res2) {
             $this->encoding = $encoding;
             return true;
         }
-
         if ($this->encoding !== '') {
             // failback
             mb_internal_encoding($this->encoding);
             @mb_regex_encoding($this->encoding);
             return false;
         }
-
         return false;
     }
 
@@ -226,7 +230,7 @@ class StandfordLikePasswordPolicy
                 }
 
                 $fmt[$lang] = numfmt_create($lang, NumberFormatter::SPELLOUT);
-                $newspelled = numfmt_format($fmt[$lang], $value);
+                $newspelled = numfmt_format($fmt[$lang], $number);
                 //echo "$lang : $value => $newspelled\n";
                 $tests[] = $newspelled;
                 $tests[] = $this->mbH4xx0r($newspelled);

@@ -29,7 +29,15 @@ class StandfordLikePasswordPolicy extends atoum
             ->then
                 ->string($this->testedInstance->getEncoding())
                 ->isEqualTo('UTF-16');
+    }
 
+   /**
+    * Test construct for PHP7
+    *
+    * @php < 8.0
+    */
+    public function testConstructPHP7()
+    {
         $this->assert(__METHOD__ . ' : test constructor with invalid param')
             ->exception(
                 function () : void {
@@ -45,7 +53,27 @@ class StandfordLikePasswordPolicy extends atoum
         //);
     }
 
-    public function testSetEncoding() : void
+   /**
+    * Test construct for PHP8
+    *
+    * @php >= 8.0
+    */
+    public function testConstructPHP8()
+    {
+        $this->assert(__METHOD__ . ' : test constructor with invalid param')
+            ->error(
+                function () : void {
+                    $this->newTestedInstance('AZERTY');
+                }
+            );
+    }
+
+   /**
+    * Test setEncoding for PHP7
+    *
+    * @php < 8.0
+    */
+    public function testSetEncodingPHP7() : void
     {
         $i =0;
 
@@ -66,6 +94,30 @@ class StandfordLikePasswordPolicy extends atoum
                     ->withType(E_WARNING)   // pass
                     ->exists()
         ;
+    }
+
+   /**
+    * Test setEncoding for PHP7
+    *
+    * @php >= 8.0
+    */
+    public function testSetEncodingPHP8() : void
+    {
+        $i =0;
+
+        $i++;
+        $this->assert(__METHOD__ . ' : test #' . $i)
+            ->given($this->newTestedInstance('UTF-16'))
+            ->then
+                ->boolean($this->testedInstance->setEncoding('UTF-16'))->isTrue();
+
+
+        $i++;
+        $this->assert(__METHOD__ . ' : test #' . $i)
+            ->given($this->newTestedInstance)
+            ->then
+                ->boolean($this->testedInstance->setEncoding('AZERTY'))
+                    ->isFalse();
     }
 
     public function testIsCompliant() : void

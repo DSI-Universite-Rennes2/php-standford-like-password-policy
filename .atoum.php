@@ -9,7 +9,16 @@ More information on documentation:
 [fr] http://docs.atoum.org/fr/chapter3.html#Fichier-de-configuration
 */
 
-use mageekguy\atoum\reports;
+//use mageekguy\atoum\reports;
+
+
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+use atoum\atoum\reports;
+
+$extension = new reports\extension($script);
+
+$extension->addToRunner($runner);
 
 $runner
     ->addTestsFromDirectory(__DIR__ . '/tests/units/')
