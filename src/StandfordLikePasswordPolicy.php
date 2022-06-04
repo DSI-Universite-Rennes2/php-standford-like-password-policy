@@ -241,7 +241,7 @@ class StandfordLikePasswordPolicy
         // Add ASCII version and version replaced - and ' by space
         $tmp = $tests;
         foreach ($tmp as $val) {
-            $nodiacritic = iconv($this->encoding, 'ASCII//TRANSLIT', $val);
+            $nodiacritic = iconv($this->encoding, 'ASCII//TRANSLIT//IGNORE', $val);
             $nosep       = str_replace(array('-', "'"), ' ', $nodiacritic);
             //echo "Rajoute dans les tests : $nosep\n";
 
