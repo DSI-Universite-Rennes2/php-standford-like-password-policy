@@ -19,6 +19,7 @@ namespace UniversiteRennes2\StandfordLikePasswordPolicy;
 
 use DateTime;
 use NumberFormatter;
+use function PHP81_BC\strftime;
 
 /**
  * StandfordLikePasswordPolicy - Standford's like Password policy implementation
@@ -219,12 +220,9 @@ class StandfordLikePasswordPolicy
             foreach ($locales as $lang) {
                 $number = (int) $value;
                 if ($number <= 12) {
-                    $resloc = setlocale(LC_TIME, $lang . '.UTF-8');
-                    if ($resloc !== false) {
-                        $date    = DateTime::createFromFormat('!m', $value);
-                        $tests[] = strftime('%B', $date->getTimestamp()); // Complete name
-                        $tests[] = strftime('%b', $date->getTimestamp()); // Abbreviated name
-                    }
+                    $date    = DateTime::createFromFormat('!m', $value);
+                    $tests[] = strftime('%B', $date, $lang); // Complete name
+                    $tests[] = strftime('%b', $date, $lang); // Abbreviated name
                 }
 
                 $fmt[$lang] = numfmt_create($lang, NumberFormatter::SPELLOUT);
