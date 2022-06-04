@@ -19,7 +19,6 @@ namespace UniversiteRennes2\StandfordLikePasswordPolicy;
 
 use DateTime;
 use NumberFormatter;
-// use function PHP81_BC\strftime;
 
 /**
  * StandfordLikePasswordPolicy - Standford's like Password policy implementation
