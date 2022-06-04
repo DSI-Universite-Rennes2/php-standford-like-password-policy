@@ -194,15 +194,13 @@
             <property name="linesCountBetweenDescriptionAndAnnotations" value="1"/>
             <property name="linesCountBetweenAnnotationsGroups" value="1"/>
             <property name="annotationsGroups" type="array">
-                <element value="
-                    @phpcsSuppress,
-                    @param,
-                "/>
+                <element value="@param"/>
                 <element value="@return"/>
                 <element value="
                     @internal,
                     @deprecated,
-                "/>
+                    "/>
+                <element value="@phpcsSuppress"/>
                 <element value="
                     @link,
                     @see,
@@ -420,6 +418,7 @@
             <property name="traversableTypeHints" type="array">
                 <element value="Doctrine\Common\Collections\Collection"/>
             </property>
+            <property name="enableMixedTypeHint"  value="false"/>
         </properties>
     </rule>
 
