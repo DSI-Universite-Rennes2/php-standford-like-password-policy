@@ -201,6 +201,7 @@ class StandfordLikePasswordPolicy
      *     - Search literal version of numeric value in 5 langs and their H@x0r transformation version
      *     - Search for H@x0r transformation version for non-numeric value
      *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param string $subject subject where searching
      * @param mixed  $value   value to search
      *
