@@ -9,7 +9,11 @@ More information on documentation:
 [fr] http://docs.atoum.org/fr/chapter3.html#Fichier-de-configuration
 */
 
-use mageekguy\atoum\reports;
+use
+    atoum\atoum,
+    atoum\atoum\reports,
+    atoum\atoum\writers\std
+    ;
 
 $runner
     ->addTestsFromDirectory(__DIR__ . '/tests/units/')
@@ -17,32 +21,30 @@ $runner
 
 $runner->getScore()->getCoverage();
 
-$travis = getenv('TRAVIS');
-if ($travis)
+$CI = getenv('coverage');
+if ($CI)
 {
-    echo "TRAVIS ENV\n";
-    echo "  JOB ID : " . getenv('TRAVIS_JOB_ID') . "\n";
-    echo "  BRANCH : " . getenv('TRAVIS_BRANCH') . "\n";
+    echo "CI: $CI\n";
     $script->addDefaultReport();
-    $coverallsToken = getenv('COVERALLS_REPO_TOKEN');
-    if ($coverallsToken)
-    {
-        echo "  COVERALLS Token detected...\n";
-        $coverallsReport = new reports\asynchronous\coveralls('classes', $coverallsToken);
-        $defaultFinder = $coverallsReport->getBranchFinder();
-        $coverallsReport
-            ->setBranchFinder(function() use ($defaultFinder) {
-                    if (($branch = getenv('TRAVIS_BRANCH')) === false)
-                    {
-                        $branch = $defaultFinder();
-                    }
-                    return $branch;
+
+    $coverallsToken  = getenv('COVERALLS_REPO_TOKEN') ?: null;
+    echo "Len token : " . strlen($coverallsToken) . "\n";
+    $coverallsReport = new reports\asynchronous\coveralls('classes', $coverallsToken);
+    $defaultFinder   = $coverallsReport->getBranchFinder();
+    $coverallsReport
+        ->setBranchFinder(function() use ($defaultFinder) {
+                if (($branch = getenv('GITHUB_BRANCH')) === false)
+                {
+                    $branch = $defaultFinder();
                 }
-            )
-            ->setServiceName(getenv('TRAVIS') ? 'travis-ci' : null)
-            ->setServiceJobId(getenv('TRAVIS_JOB_ID') ?: null)
-            ->addDefaultWriter()
-        ;
-        $runner->addReport($coverallsReport);
-    }
+                return $branch;
+            }
+        )
+        ->setServiceName('github-actions')
+        ->setServiceJobId(getenv('GITHUB_RUN_NUMBER') ?: null)
+        ->addDefaultWriter()
+    ;
+    $runner->addReport($coverallsReport);
+} else {
+    echo "No coverage reports (missing coverage env variable) : $CI\n";
 }

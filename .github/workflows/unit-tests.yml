@@ -1,17 +1,27 @@
-name: PHP Composer
+name: unit tests
 
-on: 
+on:
   push:
   pull_request:
 
 jobs:
-  build:
+  test:
+    environment: 'COVERALLS'
     runs-on: ${{ matrix.os }}
-    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
-    strategy: 
+
+    strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: ['ubuntu-latest']
         php: [7.1, 7.2, 7.3, 7.4, 8.0, 8.1]
+        experimental: [ false ]
+      fail-fast: false
+
+    env:
+      coverage: ${{ (matrix.os == 'ubuntu-latest' && matrix.php == '8.1') && 'xdebug' || '0' }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
+    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
 
     steps:
       - name: Checkout
@@ -21,8 +31,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: curl, mbstring, intl, iconv
-          coverage: xdebug
+          extensions: curl, mbstring
+          coverage: ${{ env.coverage }}
           tools: composer
 
       - name: Get Composer Cache Directory
@@ -39,12 +49,10 @@ jobs:
       - name: Install Composer dependencies
         run: composer update --prefer-stable --no-interaction
 
-      - name: PHP module list
-        run: php -m
-
       - name: PHP CS
         run: ./vendor/bin/phpcs -p --standard=./phpcs.xml --extensions=php --warning-severity=0 --ignore=examples/console.php src/ tests/ examples/
 
       - name: PHP Unit Tests
-        run: XDEBUG_MODE=coverage php -ddate.timezone=Europe/Paris ./vendor/bin/atoum +verbose
+        continue-on-error: ${{ matrix.experimental }}
+        run: XDEBUG_MODE=coverage php -ddate.timezone=Europe/Paris ./vendor/bin/atoum +verbose --enable-branch-and-path-coveragea
 
