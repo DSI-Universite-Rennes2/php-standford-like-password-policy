@@ -61,11 +61,11 @@ class StandfordLikePasswordPolicy extends atoum
     public function testConstructPHP8()
     {
         $this->assert(__METHOD__ . ' : test constructor with invalid param')
-             ->exception(
-                 function () : void {
-                      $this->newTestedInstance('AZERTY');
-                 }
-             );
+            ->exception(
+                function () : void {
+                    $this->newTestedInstance('AZERTY');
+                }
+            );
     }
 
    /**

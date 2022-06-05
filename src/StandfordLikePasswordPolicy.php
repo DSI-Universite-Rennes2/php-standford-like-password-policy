@@ -83,15 +83,14 @@ class StandfordLikePasswordPolicy
         if ($res1 && $res2) {
             $this->encoding = $encoding;
             return true;
-        } else {
-            if ($this->encoding !== '') {
-                // failback
-                mb_internal_encoding($this->encoding);
-                @mb_regex_encoding($this->encoding);
-                return false;
-            }
+        }
+        if ($this->encoding !== '') {
+            // failback
+            mb_internal_encoding($this->encoding);
+            @mb_regex_encoding($this->encoding);
             return false;
         }
+        return false;
     }
 
     /**
