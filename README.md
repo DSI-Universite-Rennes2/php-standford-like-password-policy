@@ -5,7 +5,7 @@ License-Filename: LICENSE
 -->
 # Standford's like password policy : PHP implementation
 
-[![reuse compliant](https://reuse.software/badge/reuse-compliant.svg)](https://reuse.software/) [![PHP Composer](https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy/actions/workflows/build.yml/badge.svg)](https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy/actions/workflows/build.yml)
+[![reuse compliant](https://reuse.software/badge/reuse-compliant.svg)](https://reuse.software/) [![PHP Composer](https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy/actions/workflows/build.yml/badge.svg)](https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy/actions/workflows/build.yml)[![Coverage Status](https://coveralls.io/repos/github/DSI-Universite-Rennes2/php-standford-like-password-policy/badge.svg?branch=main)](https://coveralls.io/github/DSI-Universite-Rennes2/php-standford-like-password-policy?branch=main)
 
 This library implements a checker for Standford's password policy in PHP
 with only one minor change :
