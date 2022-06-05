@@ -7,12 +7,12 @@
         "php": ">= 7.0",
         "ext-intl": "*",
         "ext-mbstring": "*",
-        "php81_bc/strftime": "^0.5.0"
+        "php81_bc/strftime": "*"
     },
     "require-dev": {
-        "atoum/atoum": ">= 3.3",
-        "slevomat/coding-standard": ">= 5.0",
-        "squizlabs/php_codesniffer": ">= 3.4"
+        "atoum/atoum": "*",
+        "slevomat/coding-standard": "*",
+        "squizlabs/php_codesniffer": "*"
     },
     "license": "LGPL-3.0-or-later",
     "authors": [
@@ -45,5 +45,5 @@
         "test": "atoum tests/units/StandfordLikePasswordPolicy.php",
         "check-style": "phpcs -p --standard=./phpcs.xml --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src/ tests/ examples/",
         "fix-style": "phpcbf -p --standard=./phpcs.xml --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src/ tests/ examples/"
-	}
+    }
 }
