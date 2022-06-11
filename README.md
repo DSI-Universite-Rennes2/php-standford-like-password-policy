@@ -5,11 +5,12 @@ License-Filename: LICENSE
 -->
 # Standford's like password policy : PHP implementation
 
-[![reuse compliant](https://reuse.software/badge/reuse-compliant.svg)](https://reuse.software/)
+[![Latest Stable Version](https://img.shields.io/packagist/v/universiterennes2/standfordlikepasswordpolicy)](https://packagist.org/packages/universiterennes2/standfordlikepasswordpolicy)
+[![REUSE compliant](https://reuse.software/badge/reuse-compliant.svg)](https://reuse.software/)
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/universiterennes2/standfordlikepasswordpolicy?color=green&style=flat-square)](https://php.net/)
 [![Unit tests](https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/DSI-Universite-Rennes2/php-standford-like-password-policy/actions/workflows/unit-tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/DSI-Universite-Rennes2/php-standford-like-password-policy/badge.svg?branch=main)](https://coveralls.io/github/DSI-Universite-Rennes2/php-standford-like-password-policy?branch=main)
-[![Licence](https://img.shields.io/packagist/l/universiterennes2/standfordlikepasswordpolicy?color=gree)](LICENSE)
+[![License](https://img.shields.io/packagist/l/universiterennes2/standfordlikepasswordpolicy?color=gree)](LICENSE)
 
 This library implements a checker for Standford's password policy in PHP
 with only one minor change :
