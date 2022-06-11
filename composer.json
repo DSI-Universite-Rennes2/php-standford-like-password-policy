@@ -12,8 +12,10 @@
     "require-dev": {
         "atoum/atoum": "*",
         "slevomat/coding-standard": "*",
+        "phpstan/phpdoc-parser": "< 1.6.0",
         "squizlabs/php_codesniffer": "*"
     },
+    "prefer-stable" : true,
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
