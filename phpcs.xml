@@ -369,16 +369,16 @@
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
         <properties>
             <property
-                name="newlinesCountBetweenOpenTagAndDeclare"
-                value="2"
+                name="linesCountBeforeDeclare"
+                value="1"
             />
             <property
                 name="spacesCountAroundEqualsSign"
                 value="0"
             />
             <property
-                name="newlinesCountAfterDeclare"
-                value="2"
+                name="linesCountAfterDeclare"
+                value="1"
             />
         </properties>
     </rule>
@@ -413,8 +413,6 @@
          forbid useless/duplicated information in phpDoc -->
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
         <properties>
-            <property name="allAnnotationsAreUseful" value="true"/>
-            <property name="enableEachParameterAndReturnInspection" value="true"/>
             <property name="traversableTypeHints" type="array">
                 <element value="Doctrine\Common\Collections\Collection"/>
             </property>
