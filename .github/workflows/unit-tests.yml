@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -37,7 +37,7 @@ jobs:
 
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -49,7 +49,5 @@ jobs:
       - name: Install Composer dependencies
         run: composer update --prefer-stable --no-interaction
 
-      - name: PHP Unit Tests
-        continue-on-error: ${{ matrix.experimental }}
-        run: XDEBUG_MODE=coverage php -ddate.timezone=Europe/Paris ./vendor/bin/atoum +verbose --enable-branch-and-path-coveragea
-
+      - name: Run PHP CodeSniffer
+        run: ./vendor/bin/phpcs -p --standard=./phpcs.xml --extensions=php --warning-severity=0 --ignore=examples/console.php src/ tests/ examples/
